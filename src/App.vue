@@ -4,6 +4,7 @@
     <h1>Welcome to Your Vue.js</h1>
     <h2>{{count}}</h2>
     <h2>{{double}}</h2>
+    <h2>mouse position : ({{x}},{{y}})</h2>
     <button @click="incr">incr count</button>
     <ul>
       <li v-for="number in numbers" :key="number">
@@ -20,13 +21,11 @@
 import { 
   computed, 
   reactive, 
-  toRefs, 
-  onMounted, 
-  onUpdated,
+  toRefs,
   watch,
   ref,
-  toRef
 } from 'vue'
+import useMousePosistion from './hooks/useMousePosition'
 interface DataProps {
   count: number;
   incr: () => void;
@@ -39,8 +38,6 @@ interface DataProps {
 export default {
   name: 'App',
   setup() {
-    onMounted(() => console.log("on mounted..."))
-    onUpdated(() => console.log("on updated..."))
     const data: DataProps = reactive({
       count: 0,
       incr: () => data.count ++,
@@ -55,6 +52,7 @@ export default {
     return {
       ...toRefs(data),
       greating,
+      ...useMousePosistion(),
     }
   }
 };
