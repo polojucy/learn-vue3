@@ -20,46 +20,9 @@
 </template>
 
 <script lang="ts">
-import { 
-  computed, 
-  reactive, 
-  toRefs,
-  watch,
-  ref,
-} from 'vue'
-import useMousePosistion from './hooks/useMousePosition'
-import useURLLoader from './hooks/useURLLoader'
-interface DataProps {
-  count: number;
-  incr: () => void;
-  double: number;
-  numbers: number[];
-  person: {
-    name?: string;
-  };
-}
+// import { reactive } from 'vue'
 export default {
   name: 'App',
-  setup() {
-    const data: DataProps = reactive({
-      count: 0,
-      incr: () => data.count ++,
-      double: computed(() => data.count * 2),
-      numbers: [1,2,3,4],
-      person: {},
-    })
-    data.numbers[2] = 0
-    data.person.name = 'jack'
-    const greating = ref('')
-    watch(greating, (newVal, oldVal) => document.title = oldVal + '#' + newVal)
-
-    return {
-      ...toRefs(data),
-      greating,
-      ...useMousePosistion(),
-      ...useURLLoader('https://dog.ceo/api/breeds/image/random'),
-    }
-  }
 };
 </script>
 
