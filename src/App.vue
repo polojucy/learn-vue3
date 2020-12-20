@@ -10,13 +10,12 @@
         <h2>{{number}}</h2>
       </li>
     </ul>
-    <input v-text="person.name"/>
     <h2 v-if="person.name">person.name is {{person.name}}</h2>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, reactive, toRefs } from 'vue'
+import { computed, reactive, toRefs, onMounted, onUpdated } from 'vue'
 interface DataProps {
   count: number;
   incr: () => void;
@@ -29,6 +28,8 @@ interface DataProps {
 export default {
   name: 'App',
   setup() {
+    onMounted(() => console.log("on mounted..."))
+    onUpdated(() => console.log("on updated..."))
     const data: DataProps = reactive({
       count: 0,
       incr: () => data.count ++,
