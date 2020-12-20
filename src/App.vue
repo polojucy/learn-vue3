@@ -2,9 +2,16 @@
   <div id="id">
     <img src="./assets/logo.png"/>
     <h1>Welcome to Your Vue.js</h1>
-    <p>{{count}}</p>
-    <p>{{double}}</p>
-    <button @click="incr">click me</button>
+    <h2>{{count}}</h2>
+    <h2>{{double}}</h2>
+    <button @click="incr">incr count</button>
+    <ul>
+      <li v-for="number in numbers" :key="number">
+        <h2>{{number}}</h2>
+      </li>
+    </ul>
+    <input v-text="person.name"/>
+    <h2 v-if="person.name">person.name is {{person.name}}</h2>
   </div>
 </template>
 
@@ -14,22 +21,23 @@ interface DataProps {
   count: number;
   incr: () => void;
   double: number;
+  numbers: number[];
+  person: {
+    name?: string;
+  };
 }
 export default {
   name: 'App',
   setup() {
-    // const count = ref(0)
-    // const double = computed(() => {
-    //   return count.value * 2
-    // })
-    // const incr = () => {
-    //   count.value ++
-    // }
     const data: DataProps = reactive({
       count: 0,
       incr: () => data.count ++,
-      double: computed(() => data.count * 2)
+      double: computed(() => data.count * 2),
+      numbers: [1,2,3,4],
+      person: {},
     })
+    data.numbers[2] = 0
+    data.person.name = 'jack'
     return {
       ...toRefs(data)
     }
