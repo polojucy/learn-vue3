@@ -1,7 +1,9 @@
 <template>
   <div id="id">
-    <img src="./assets/logo.png"/>
+    <!-- <img src="./assets/logo.png"/> -->
     <h1>Welcome to Your Vue.js</h1>
+    <h2 v-if="loading">Loading....</h2>
+    <img v-if="loaded" :src="result.message" alt="">
     <h2>{{count}}</h2>
     <h2>{{double}}</h2>
     <h2>mouse position : ({{x}},{{y}})</h2>
@@ -26,6 +28,7 @@ import {
   ref,
 } from 'vue'
 import useMousePosistion from './hooks/useMousePosition'
+import useURLLoader from './hooks/useURLLoader'
 interface DataProps {
   count: number;
   incr: () => void;
@@ -49,10 +52,12 @@ export default {
     data.person.name = 'jack'
     const greating = ref('')
     watch(greating, (newVal, oldVal) => document.title = oldVal + '#' + newVal)
+
     return {
       ...toRefs(data),
       greating,
       ...useMousePosistion(),
+      ...useURLLoader('https://dog.ceo/api/breeds/image/random'),
     }
   }
 };
