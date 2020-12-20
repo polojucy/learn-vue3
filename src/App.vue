@@ -11,11 +11,22 @@
       </li>
     </ul>
     <h2 v-if="person.name">person.name is {{person.name}}</h2>
+    <h2>input title</h2>
+    <input type="text" v-model="greating">
   </div>
 </template>
 
 <script lang="ts">
-import { computed, reactive, toRefs, onMounted, onUpdated } from 'vue'
+import { 
+  computed, 
+  reactive, 
+  toRefs, 
+  onMounted, 
+  onUpdated,
+  watch,
+  ref,
+  toRef
+} from 'vue'
 interface DataProps {
   count: number;
   incr: () => void;
@@ -39,8 +50,11 @@ export default {
     })
     data.numbers[2] = 0
     data.person.name = 'jack'
+    const greating = ref('')
+    watch(greating, (newVal, oldVal) => document.title = oldVal + '#' + newVal)
     return {
-      ...toRefs(data)
+      ...toRefs(data),
+      greating,
     }
   }
 };
