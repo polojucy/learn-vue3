@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <global-header :user="user"/>
     <h1>Welcome to Your Vue.js</h1>
     <column-list :list="list"/>
   </div>
@@ -9,6 +10,12 @@
 // import { reactive } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
+import GlobalHeader, {UserProps} from './components/GlobalHeader.vue'
+const user: UserProps = {
+  isLogin: true,
+  name: 'jack',
+  id: 101,
+}
 const mockList: ColumnProps[] = [
   {
     id: 1,
@@ -38,11 +45,13 @@ const mockList: ColumnProps[] = [
 export default {
   name: 'App',
   components: {
-    ColumnList
+    ColumnList,
+    GlobalHeader,
   },
   setup() {
     return {
-      list: mockList
+      list: mockList,
+      user,
     }
   }
 };
