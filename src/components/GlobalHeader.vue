@@ -6,12 +6,15 @@
       <li class="list-inline-item"><a class="btn btn-outline-light my-2" href="#">注册</a></li>
     </ul>
     <ul v-else class="list-inline mb-0">
-      <li class="list-inline-item"><a class="btn btn-outline-light my-2" href="#">你好，{{user.name}}</a></li>
+      <li class="list-inline-item">
+        <dropdown :title="`你好，${user.name}`"/>
+      </li>
     </ul>
   </nav>
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
+import Dropdown from './Dropdown.vue'
 
 export interface UserProps {
   isLogin: boolean;
@@ -26,6 +29,9 @@ export default defineComponent({
       type: Object as PropType<UserProps>,
       requried: true,
     }
+  },
+  components: {
+    Dropdown,
   },
   setup() {
     return
