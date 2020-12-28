@@ -1,18 +1,17 @@
 <template>
-  <div class="dropdown">
+  <div class="dropdown" ref="dropdownRef">
     <a class="btn btn-outline-light my-2 dropdown-toggle" @click.prevent="toggleDisplay">
       {{title}}
     </a>
     <ul class="dropdown-menu" :style="{ display: 'block' }" v-if="display">
-      <li><a class="dropdown-item" href="#">Action</a></li>
-      <li><a class="dropdown-item" href="#">Another action</a></li>
-      <li><a class="dropdown-item" href="#">Something else here</a></li>
+      <slot></slot>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
+import useClickOutside from '../hooks/useClickOutside'
 export default defineComponent({
   name: 'Dropdown',
   props: {
@@ -22,11 +21,20 @@ export default defineComponent({
     }
   },
   setup() {
-    const display = ref(true)
+    const display = ref(false)
     const toggleDisplay = () => display.value = !display.value
+    const dropdownRef = ref<null | HTMLElement>(null)
+    const isClickOutSide = useClickOutside(dropdownRef)
+    watch(isClickOutSide, () => {
+      if (display.value && isClickOutSide.value) {
+        display.value = false
+      }
+    })
+
     return {
       toggleDisplay,
       display,
+      dropdownRef,
     }
   }
 })
